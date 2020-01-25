@@ -1,7 +1,8 @@
 #! /usr/bin/env python3
 
-import POI
+import sys
 
+import POI
 
 
 welcomeText = """The aim of this tool is to provide a means of logging locations and 
@@ -20,18 +21,99 @@ actionText = """
 Please select from the following options:
 1) Add a new location 
 2) Add a physical adress to an existing location
-3) Rename an existing location a name
+3) Rename an existing location 
 4) Add a note to an existing location
 5) Remove a note from an existing location
 6) Show all the information for an existing location
 7) Show a specific note for an existing location
 8) Show all locations
-
+9) Close the program & delete everything
 """
 
+pois = []
+
+def one():
+    print( """
+    New POIs are created using latitude (-90-90), longitude 
+    (-180 - 180) and optional name.
+    """)
+    print("Please enter the latitude")
+    lat = int(input())
+    print("Please enter the longitude")
+    lon = int(input())
+    print("If you want to name the POI enter it now, else leave it blank")
+    name = input()
+    p = POI.POI(lat, lon, name)
+    pois.append(p)
+        
+def two():
+    print("Please enter the POI id")
+    print("Leave blank to return to previous screen")
+    id = int(input())
+    if id == '':
+        return 0
+    if id >= 0 and id < len(pois):
+        print("Please enter street name")
+        street = input()
+        print("Please enter adress number")
+        num = int(input())
+        print("Please enter the zip code")
+        zip = input()
+        print("Please enter the city")
+        city = input()
+        print("Please enter the country")
+        country = input()
+        pois[id].addAdress(street, num, zip, city, country)
+        return 1
+    return 0
+    
+def three():
+    print("Please enter the POI id")
+    print("Leave blank to return to previous screen")
+    id = int(input())
+    if id == '':
+        return 0
+    if id >= 0 and id < len(pois):
+        print("Please enter a name for the POI")
+        print("Leave blank to remove the name from a POI")
+        name = input()
+        pois[id].rename(name)
+        return 1
+    return 0
+
+def four():
+    print("Please enter the POI id")
+    print("Leave blank to return to previous screen")
+    id = input()
+    if id == '':
+        return 0
+    print(id)
+
+def nine():
+    sys.exit()
+ 
+ 
 print(welcomeText)
 
 print("Please enter your id")
 auth = input()
 
-pois = []
+
+
+
+while True:
+    print(actionText)
+    choice = int(input())
+    if choice == 1:
+        one()
+    elif choice == 2:
+        two()
+    elif choice == 3:
+        three()
+    elif choice == 4:
+        four()    
+    elif choice == 9:
+        nine()
+
+    
+    

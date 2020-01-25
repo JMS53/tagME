@@ -17,6 +17,11 @@ class Note:
     def __init__(self, author, content):
         self.author = author
         self.content = content
+    
+    def __str__(self):
+        s = "Author: " + self.author
+        s += "\n\n" + self.content
+        return s
 
 class POI:
     def __init__ (self, lat = False, lon = False, name=''):
@@ -61,8 +66,8 @@ class POI:
         for i in range(self.noteL):
             j = i + 1
             print("Note ", j)
-            print("Author: ", self.notes[j].author)
-            print("Content: ",self.notes[j].content, "\n")
+            print(self.notes[j])
+            
             
     def showNote(self, key):
         if key in self.notes.keys():
@@ -70,41 +75,24 @@ class POI:
             print("Author: ", self.notes[key].author)
             print("Content: ",self.notes[key].content, "\n")
     
+    def __str__(self):
+        s = "Name: "
+        if self.name != '':
+            s  += self.name + "\n"
+        else:
+            s += "Unamed POI\n"
+            
+        s += "Lattitude: " + str(self.lat) + "\n"
+        s += "Longitude: " + str(self.lon) + "\n"
+        if self.adress:
+            s += str(self.adress)
+        for k in range(self.noteL):
+            s += "Note ID: " + str(k+1) + "\n"
+            s += str(self.notes[k+1])
+            s += "\n"
+        return s
     
     
-    
 
 
-#######
-#tests#
-#######
 
-#Bounds 
-#passed
-#points = [POI(0,0), POI(-91,0),POI(91,0), POI(0,-181),  POI(0,181)  ]
-
-#Adress creation & Renaming
-p = POI(0,0)
-p.addAdress('Pennsylvania Avenue NW', 1600, 20001, 'Washington D.C.', 'USA')
-print(p.adress)
-p.removeAdress()
-print(p.adress)
-p.rename("White House")
-print(p.name)
-
-#Notes
-auth = 'JMS53'
-content1 = """
-This is a multiline content element
-"""
-content2 = 'This is a  single quote comment'
-content3 = "This is a double quote comment"
-p.addNote(auth, content1)
-p.addNote(auth, content2)
-p.addNote(auth, content3)
-
-p.showNotes()
-p.rmNote(4, auth)
-p.rmNote(3, auth)
-p.showNotes()
-p.showNote(2)

@@ -63,7 +63,9 @@ def two():
         city = input()
         print("Please enter the country")
         country = input()
-        pois[id].addAdress(street, num, zip, city, country)
+        p = pois[id]
+        p.addAdress(street, num, zip, city, country)
+        pois[id] = p
         return 1
     return 0
     
@@ -77,7 +79,9 @@ def three():
         print("Please enter a name for the POI")
         print("Leave blank to remove the name from a POI")
         name = input()
-        pois[id].rename(name)
+        p =pois[id]
+        p.rename(name)
+        pois[id] = p
         return 1
     return 0
 
@@ -87,8 +91,54 @@ def four():
     id = input()
     if id == '':
         return 0
-    print(id)
+    id = int(id)
+    p = pois[id]
+    print("Please enter your additional information for the POI")
+    content = input()
+    p.addNote(auth, content)
+    pois[id] = p
 
+def five():
+    print("Please enter the POI id")
+    print("Leave blank to return to previous screen")
+    id = input()
+    if id == '':
+        return 0
+    id = int(id)
+    p = pois[id]
+    print("Please enter the note id you want to remove")
+    key = int(input())
+    p.rmNote(key, auth)
+    pois[id] = p
+
+def six():
+    print("Please enter the POI id")
+    print("Leave blank to return to previous screen")
+    id = input()
+    if id == '':
+        return 0
+    id = int(id)
+    p = pois[id]
+    print(p)
+
+def seven():
+    print("Please enter the POI id")
+    print("Leave blank to return to previous screen")
+    id = input()
+    if id == '':
+        return 0
+    id = int(id)
+    p = pois[id]
+    print("Please select the Note to see")
+    k = int(input())
+    p.showNote(k)
+
+def eight():
+    for i in range(len(pois)):
+        p = pois[i]
+        print("POI ID: ", i)
+        print("POI name: ", p.name)
+    
 def nine():
     sys.exit()
  
@@ -112,6 +162,14 @@ while True:
         three()
     elif choice == 4:
         four()    
+    elif choice == 5:
+        five()
+    elif choice == 6:
+        six()
+    elif choice == 7:
+        seven()
+    elif choice == 8:
+        eight()
     elif choice == 9:
         nine()
 

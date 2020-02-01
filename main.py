@@ -30,6 +30,7 @@ Please select from the following options:
 8)  Show all locations
 9)  Close the program & delete everything
 10) Export data to JSON
+11) Import from JSON
 """
 
 pois = []
@@ -144,13 +145,16 @@ def eight():
 def nine():
     sys.exit()
  
-def ten():
+def ten(fn = 'pois.json'):
     x = {"pois" : []}
     for p in pois:
         x["pois"].append(p.toJSON())
     
-    print(x)
+    with open(fn, 'w') as outfile:
+        json.dump(x, outfile)
+
  
+
 print(welcomeText)
 
 print("Please enter your id")
@@ -179,7 +183,14 @@ while True:
     elif choice == 8:
         eight()
     elif choice == 10:
-        ten()
+        print("Please enter the filename to use, leave blank for pois.json")
+        fn = input()
+        if fn != '':
+            ten(fn)
+        else:
+            ten()
+    elif choice == 11:
+        fromJson()
     else: 
         nine()
 

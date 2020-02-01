@@ -1,0 +1,1 @@
+{"pois": [{"notes": {}, "name": "test", "lon": 0, "lat": 0}]}

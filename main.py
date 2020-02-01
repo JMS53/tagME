@@ -20,15 +20,16 @@ this task will effectively delete all your work.
 
 actionText = """
 Please select from the following options:
-1) Add a new location 
-2) Add a physical adress to an existing location
-3) Rename an existing location 
-4) Add a note to an existing location
-5) Remove a note from an existing location
-6) Show all the information for an existing location
-7) Show a specific note for an existing location
-8) Show all locations
-9) Close the program & delete everything
+1)  Add a new location 
+2)  Add a physical adress to an existing location
+3)  Rename an existing location 
+4)  Add a note to an existing location
+5)  Remove a note from an existing location
+6)  Show all the information for an existing location
+7)  Show a specific note for an existing location
+8)  Show all locations
+9)  Close the program & delete everything
+10) Export data to JSON
 """
 
 pois = []

@@ -150,10 +150,30 @@ def ten(fn = 'pois.json'):
     for p in pois:
         x["pois"].append(p.toJSON())
     
+    y = json.dumps(x, indent=4)
+    
     with open(fn, 'w') as outfile:
-        json.dump(x, outfile)
+        outfile.write(y)
+    
 
- 
+def fromJson(fn = 'pois.json'):
+    with open (fn) as jsonFile:
+        data = json.load(jsonFile)
+        for p in data['pois']:
+            point = POI.POI(p['lat'], p['lon'], p['name'])
+            
+            if p['notes']:
+               notes = p['notes'] 
+               for k in notes.keys():
+                  print(k)
+                  n = notes[k]
+                  auth = n['author']
+                  cont = n['content']
+                  point.addNote(auth,cont)
+                
+        pois.append(point)
+
+    
 
 print(welcomeText)
 

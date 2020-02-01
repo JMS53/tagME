@@ -148,8 +148,8 @@ def ten():
     x = {"pois" : []}
     for p in pois:
         x["pois"].append(p.toJSON())
-    y = json.dump(x)
-    print(y)
+    
+    print(x)
  
 print(welcomeText)
 

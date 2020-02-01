@@ -1,3 +1,5 @@
+import json
+
 class Adress:
     def __init__(self, street='', num=0, zip=0, city='', country=''):
         self.street = street
@@ -43,6 +45,23 @@ class POI:
         self.tags = []
         self.name = name 
         
+    def __str__(self):
+        s = "Name: "
+        if self.name != '':
+            s  += self.name + "\n"
+        else:
+            s += "Unamed POI\n"
+            
+        s += "Lattitude: " + str(self.lat) + "\n"
+        s += "Longitude: " + str(self.lon) + "\n"
+        if self.adress:
+            s += str(self.adress)
+        for k in range(self.noteL):
+            s += "Note ID: " + str(k+1) + "\n"
+            s += str(self.notes[k+1])
+            s += "\n"
+        return s
+    
     def addAdress(self, str, num, zip, city, country):
         self.adress = Adress(str, num, zip, city, country)
     
@@ -74,25 +93,38 @@ class POI:
             print("Note ", key)
             print("Author: ", self.notes[key].author)
             print("Content: ",self.notes[key].content, "\n")
-    
-    def __str__(self):
-        s = "Name: "
-        if self.name != '':
-            s  += self.name + "\n"
-        else:
-            s += "Unamed POI\n"
-            
-        s += "Lattitude: " + str(self.lat) + "\n"
-        s += "Longitude: " + str(self.lon) + "\n"
+ 
+    def toJSON(self):
+        # Transforms the object into a dict, making it possible to export
+        # as JSON format.
+        
+        x = {
+        "name"   : self.name,
+        "lat"    : self.lat,
+        "lon"    : self.lon
+        }
         if self.adress:
-            s += str(self.adress)
-        for k in range(self.noteL):
-            s += "Note ID: " + str(k+1) + "\n"
-            s += str(self.notes[k+1])
-            s += "\n"
-        return s
+            x["adress"] = {
+                "street"  : self.adress.street,
+                "num"     : self.adress.num,
+                "zip"     : self.adress.zip,
+                "city"    : self.adress.city,
+                "country" : self.adress.country
+            }
+        for n in self.notes:
+            k = self.notes.index(n)
+            print(k)
+            #x["notes"].append(k: {
+            #    "auth"    : note.author,
+            #    "content" : note.content
+            #})
+        return x
+    
+
     
     
-
-
-
+a = POI(0,0,"test")
+a.addAdress("street",0,0,"city","country")
+a.addNote("JMS53","test1")
+b = a.toJSON()
+print(b)

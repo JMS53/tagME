@@ -1,6 +1,7 @@
 #! /usr/bin/env python3
 
 import sys
+import json
 
 import POI
 
@@ -142,6 +143,12 @@ def eight():
 def nine():
     sys.exit()
  
+def ten():
+    x = {"pois" : []}
+    for p in pois:
+        x["pois"].append(p.toJSON())
+    y = json.dump(x)
+    print(y)
  
 print(welcomeText)
 
@@ -170,7 +177,9 @@ while True:
         seven()
     elif choice == 8:
         eight()
-    elif choice == 9:
+    elif choice == 10:
+        ten()
+    else: 
         nine()
 
     

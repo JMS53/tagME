@@ -160,6 +160,7 @@ def fromJson(fn = 'pois.json'):
     with open (fn) as jsonFile:
         data = json.load(jsonFile)
         for p in data['pois']:
+            
             point = POI.POI(p['lat'], p['lon'], p['name'])
             
             if p['notes']:

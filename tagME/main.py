@@ -36,7 +36,7 @@ Please select from the following options:
 
 pois = []
 
-def one():
+def addLoc():
     print( """
     New POIs are created using latitude (-90-90), longitude 
     (-180 - 180) and optional name.
@@ -50,7 +50,7 @@ def one():
     p = POI(lat, lon, name)
     pois.append(p)
         
-def two():
+def addAdr():
     print("Please enter the POI id")
     print("Leave blank to return to previous screen")
     id = int(input())
@@ -73,7 +73,7 @@ def two():
         return 1
     return 0
     
-def three():
+def addName():
     print("Please enter the POI id")
     print("Leave blank to return to previous screen")
     id = int(input())
@@ -89,7 +89,7 @@ def three():
         return 1
     return 0
 
-def four():
+def addNote():
     print("Please enter the POI id")
     print("Leave blank to return to previous screen")
     id = input()
@@ -102,7 +102,7 @@ def four():
     p.addNote(auth, content)
     pois[id] = p
 
-def five():
+def rmNotefromPOI():
     print("Please enter the POI id")
     print("Leave blank to return to previous screen")
     id = input()
@@ -115,7 +115,7 @@ def five():
     p.rmNote(key, auth)
     pois[id] = p
 
-def six():
+def showPOI():
     print("Please enter the POI id")
     print("Leave blank to return to previous screen")
     id = input()
@@ -125,7 +125,7 @@ def six():
     p = pois[id]
     print(p)
 
-def seven():
+def showNoteFromPOI():
     print("Please enter the POI id")
     print("Leave blank to return to previous screen")
     id = input()
@@ -137,16 +137,16 @@ def seven():
     k = int(input())
     p.showNote(k)
 
-def eight():
+def showPOIs():
     for i in range(len(pois)):
         p = pois[i]
         print("POI ID: ", i)
         print("POI name: ", p.name)
     
-def nine():
+def abandon():
     sys.exit()
  
-def ten(fn = 'pois.json'):
+def toJSON(fn = 'pois.json'):
     x = {"pois" : []}
     for p in pois:
         x["pois"].append(p.toJSON())
@@ -189,32 +189,34 @@ while True:
     print(actionText)
     choice = int(input())
     if choice == 1:
-        one()
+        addLoc()
     elif choice == 2:
-        two()
+        addAdr()
     elif choice == 3:
-        three()
+        addName()
     elif choice == 4:
-        four()    
+        addNote()    
     elif choice == 5:
-        five()
+        rmNotefromPOI()
     elif choice == 6:
-        six()
+        showPOI()
     elif choice == 7:
-        seven()
+        showNoteFromPOI()
     elif choice == 8:
-        eight()
+        showPOIs()
+    elif choice == 9:
+        abandon()
     elif choice == 10:
         print("Please enter the filename to use, leave blank for pois.json")
         fn = input()
         if fn != '':
-            ten(fn)
+            toJSON(fn)
         else:
-            ten()
+            toJSON()
     elif choice == 11:
         fromJson()
-    else: 
-        nine()
+    else:
+        print("Invalid input")
 
     
     

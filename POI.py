@@ -126,9 +126,4 @@ class POI:
 
     
     
-a = POI(0,0,"test")
-a.addAdress("street",0,0,"city","country")
-a.addNote("JMS53","test1")
-a.addNote("JM", "test2")
-b = a.toJSON()
-print(b)
+

@@ -3,7 +3,8 @@
 import sys
 import json
 
-import POI
+from POI import POI
+
 
 
 welcomeText = """The aim of this tool is to provide a means of logging locations and 
@@ -46,7 +47,7 @@ def one():
     lon = int(input())
     print("If you want to name the POI enter it now, else leave it blank")
     name = input()
-    p = POI.POI(lat, lon, name)
+    p = POI(lat, lon, name)
     pois.append(p)
         
 def two():
@@ -161,7 +162,7 @@ def fromJson(fn = 'pois.json'):
         data = json.load(jsonFile)
         for p in data['pois']:
             
-            point = POI.POI(p['lat'], p['lon'], p['name'])
+            point = POI(p['lat'], p['lon'], p['name'])
             
             if p['notes']:
                notes = p['notes'] 

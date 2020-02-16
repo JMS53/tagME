@@ -101,7 +101,8 @@ class POI:
         x = {
         "name"   : self.name,
         "lat"    : self.lat,
-        "lon"    : self.lon
+        "lon"    : self.lon,
+        "notes"  : {}
         }
         if self.adress:
             x["adress"] = {
@@ -111,20 +112,18 @@ class POI:
                 "city"    : self.adress.city,
                 "country" : self.adress.country
             }
-        for n in self.notes:
-            k = self.notes.index(n)
-            print(k)
-            #x["notes"].append(k: {
-            #    "auth"    : note.author,
-            #    "content" : note.content
-            #})
+        for n in range(1,len(self.notes) + 1):
+            k = self.notes[n]
+
+            x["notes"].update({n : {
+                "author"  : k.author,
+                "content" : k.content
+            }}
+            )
+           
         return x
     
 
     
     
-a = POI(0,0,"test")
-a.addAdress("street",0,0,"city","country")
-a.addNote("JMS53","test1")
-b = a.toJSON()
-print(b)
+

@@ -3,7 +3,8 @@
 import sys
 import json
 
-import POI
+from POI import POI
+
 
 
 welcomeText = """The aim of this tool is to provide a means of logging locations and 
@@ -30,11 +31,12 @@ Please select from the following options:
 8)  Show all locations
 9)  Close the program & delete everything
 10) Export data to JSON
+11) Import from JSON
 """
 
 pois = []
 
-def one():
+def addLoc():
     print( """
     New POIs are created using latitude (-90-90), longitude 
     (-180 - 180) and optional name.
@@ -45,10 +47,10 @@ def one():
     lon = int(input())
     print("If you want to name the POI enter it now, else leave it blank")
     name = input()
-    p = POI.POI(lat, lon, name)
+    p = POI(lat, lon, name)
     pois.append(p)
         
-def two():
+def addAdr():
     print("Please enter the POI id")
     print("Leave blank to return to previous screen")
     id = int(input())
@@ -71,7 +73,7 @@ def two():
         return 1
     return 0
     
-def three():
+def addName():
     print("Please enter the POI id")
     print("Leave blank to return to previous screen")
     id = int(input())
@@ -87,7 +89,7 @@ def three():
         return 1
     return 0
 
-def four():
+def addNote():
     print("Please enter the POI id")
     print("Leave blank to return to previous screen")
     id = input()
@@ -100,7 +102,7 @@ def four():
     p.addNote(auth, content)
     pois[id] = p
 
-def five():
+def rmNotefromPOI():
     print("Please enter the POI id")
     print("Leave blank to return to previous screen")
     id = input()
@@ -113,7 +115,7 @@ def five():
     p.rmNote(key, auth)
     pois[id] = p
 
-def six():
+def showPOI():
     print("Please enter the POI id")
     print("Leave blank to return to previous screen")
     id = input()
@@ -123,7 +125,7 @@ def six():
     p = pois[id]
     print(p)
 
-def seven():
+def showNoteFromPOI():
     print("Please enter the POI id")
     print("Leave blank to return to previous screen")
     id = input()
@@ -135,22 +137,46 @@ def seven():
     k = int(input())
     p.showNote(k)
 
-def eight():
+def showPOIs():
     for i in range(len(pois)):
         p = pois[i]
         print("POI ID: ", i)
         print("POI name: ", p.name)
     
-def nine():
+def abandon():
     sys.exit()
  
-def ten():
+def toJSON(fn = 'pois.json'):
     x = {"pois" : []}
     for p in pois:
         x["pois"].append(p.toJSON())
-    y = json.dump(x)
-    print(y)
- 
+    
+    y = json.dumps(x, indent=4)
+    
+    with open(fn, 'w') as outfile:
+        outfile.write(y)
+    
+
+def fromJson(fn = 'pois.json'):
+    with open (fn) as jsonFile:
+        data = json.load(jsonFile)
+        for p in data['pois']:
+            
+            point = POI(p['lat'], p['lon'], p['name'])
+            
+            if p['notes']:
+               notes = p['notes'] 
+               for k in notes.keys():
+                  print(k)
+                  n = notes[k]
+                  auth = n['author']
+                  cont = n['content']
+                  point.addNote(auth,cont)
+                
+        pois.append(point)
+
+    
+
 print(welcomeText)
 
 print("Please enter your id")
@@ -163,25 +189,34 @@ while True:
     print(actionText)
     choice = int(input())
     if choice == 1:
-        one()
+        addLoc()
     elif choice == 2:
-        two()
+        addAdr()
     elif choice == 3:
-        three()
+        addName()
     elif choice == 4:
-        four()    
+        addNote()    
     elif choice == 5:
-        five()
+        rmNotefromPOI()
     elif choice == 6:
-        six()
+        showPOI()
     elif choice == 7:
-        seven()
+        showNoteFromPOI()
     elif choice == 8:
-        eight()
+        showPOIs()
+    elif choice == 9:
+        abandon()
     elif choice == 10:
-        ten()
-    else: 
-        nine()
+        print("Please enter the filename to use, leave blank for pois.json")
+        fn = input()
+        if fn != '':
+            toJSON(fn)
+        else:
+            toJSON()
+    elif choice == 11:
+        fromJson()
+    else:
+        print("Invalid input")
 
     
     
